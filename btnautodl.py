@@ -1,7 +1,3 @@
-__module_name__ = "BTN AutoDL"
-__module_version__ = "2.0"
-__module_description__ = "Download torrents that match your filters"
-
 import hexchat
 import sys
 import ConfigParser
@@ -14,9 +10,14 @@ from btnautodl.lib.logging import Logging
 from btnautodl.lib.announce import AnnounceParser
 from btnautodl.lib.utorrent import Utorrent
 
+__module_name__ = "BTN AutoDL"
+__module_version__ = "2.0"
+__module_description__ = "Download torrents that match your filters"
+
 logging = Logging()
 
 filters = pluginDirectory + "btnautodl\\filters.ini"
+
 
 def monitor(word, word_eol, userdata):
     if hexchat.get_info('channel') == "#BTN-WhatAuto":
@@ -28,7 +29,7 @@ def monitor(word, word_eol, userdata):
                 "\s",
                 "%20",
                 "file:///" + data["directory"] + "/" + data["options"]["release-name"] + "." + data["options"]["container"]
-            )  
+            )
 
             logging.download("download", msgData=[
                 data["options"]["title"],
@@ -39,7 +40,8 @@ def monitor(word, word_eol, userdata):
                 data["executeTime"],
                 location
             ])
-       
+
+
 def commands(word, word_eol, userdata):
     try:
         cmd = word[1]
