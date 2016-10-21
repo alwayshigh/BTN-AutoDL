@@ -1,0 +1,40 @@
+"""
+               TO ADD CHECKLIST
+---------------------------------------------------
+-- CORE
+---------------------------------------------------
+    - Detailed download history
+    - Enable/Disable duplicate torrents download
+    - Support Seasons
+    - Multiple save-to option for global filters
+    - Clean variable naming convention
+    - Comment sections of code
+    - Enable/Disable duplicate torrents download
+    - General code clean
+    - Script update
+
+---------------------------------------------------
+- UI
+---------------------------------------------------
+    - Add to github
+    - uTorrent api intergration via webgui
+        - Speed/Filename/Remaing/Data
+    - Inital load screen with relative info
+    - Auto Season Packing (Download Only)
+
+    - Commands
+        - show
+        - delete
+        - add
+        - update (script)
+        - edit
+        - stats
+        - help
+
+---------------------------------------------------
+- Future Changes
+---------------------------------------------------
+    - Support Multiple Trackers
+    - Dedicated UI
+
+"""
