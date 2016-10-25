@@ -43,10 +43,10 @@ class Logging():
         else:
             return hexchat.find_context(server=logTabName, channel=logTabName)
 
-    def __getLogMessage(self, id, data):
+    def __getLogMessage(self, index, data):
         if not data:
-            return messages[id]
-        return messages[id].format(data)
+            return messages[index]
+        return messages[index].format(d=data)
 
     def __printToLog(self, message):
         log = self.__getLogTab()

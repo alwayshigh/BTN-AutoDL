@@ -2,6 +2,7 @@ import hexchat
 import sys
 import ConfigParser
 import json
+import re
 
 pluginDirectory = hexchat.get_info('configdir') + "\\addons"
 sys.path.append(pluginDirectory)
@@ -16,7 +17,7 @@ __module_description__ = "Download torrents that match your filters"
 
 logging = Logging()
 
-filters = pluginDirectory + "btnautodl\\filters.ini"
+filters = pluginDirectory + "\\btnautodl\\filters.ini"
 
 
 def monitor(word, word_eol, userdata):
@@ -33,6 +34,7 @@ def monitor(word, word_eol, userdata):
 
             logging.download("download", msgData=[
                 data["options"]["title"],
+                data["options"]["series"],
                 data["options"]["resolution"],
                 data["options"]["source"],
                 data["options"]["codec"],
@@ -45,59 +47,57 @@ def monitor(word, word_eol, userdata):
 def commands(word, word_eol, userdata):
     try:
         cmd = word[1]
-        if cmd == "download":
-            announceParser = AnnounceParser(filters)
-            data = announceParser.parse(word[2])
-
-            if data["success"]:
-                location = re.sub(
-                    "\s",
-                    "%20",
-                    "file:///" + data["directory"] + "/" + data["options"]["release-name"] + "." + data["options"]["container"]
-                )
-                logging.download("download", msgData=[
-                    data["options"]["title"],
-                    data["options"]["resolution"],
-                    data["options"]["source"],
-                    data["options"]["codec"],
-                    data["options"]["container"],
-                    data["executeTime"],
-                    location
-                ])
-            else:
-                logging.info("unexpected-error")
-            return hexchat.EAT_ALL
-        elif cmd == "display":
-            config = ConfigParser.RawConfigParser()
-            config.read(filters)
-
-            option = word[2]
-            section = config.sections()
-            print(section)
-            if option == "shows":
-                output = "\00316List of Shows:\n"
-                count = 0
-                for section in sorted(section):
-                    if not section.startswith("filter "):
-                        if section != "settings":
-                            output = output + section + "\n"
-                            count += 1
-                output = output + "Total Shows: " + str(count)
-            elif option == "filters":
-                output = "\00316List of Filters:\n"
-                for section in sorted(section):
-                    if section.startswith("filter "):
-                        output = output + section + "\n"
-            print(output)
-        elif cmd == "season":
-            utorrent = Utorrent(config)
-            utorrent.checkSeasonFiles()
-        elif cmd == "help":
-            logging.log("help")
-        return hexchat.EAT_ALL
     except IndexError:
+        pass
+
+    if cmd == "download":
+        announceParser = AnnounceParser(filters)
+        data = announceParser.parse(word[2])
+
+        if data["success"]:
+            location = re.sub(
+                "\s",
+                "%20",
+                "file:///" + data["directory"] + "/" + data["options"]["release-name"] + "." + data["options"]["container"].lower()
+            )
+            logging.download("download", msgData=(
+                data["options"]["title"],
+                data["options"]["series"],
+                data["options"]["resolution"],
+                data["options"]["source"],
+                data["options"]["codec"],
+                data["options"]["container"],
+                data["executeTime"],
+                location)
+            )
+        else:
+            logging.info("unexpected-error")
+        return hexchat.EAT_ALL
+    elif cmd == "display":
+        config = ConfigParser.RawConfigParser()
+        config.read(filters)
+
+        option = word[2]
+        section = config.sections()
+        print(section)
+        if option == "shows":
+            output = "\00316List of Shows:\n"
+            count = 0
+            for section in sorted(section):
+                if not section.startswith("filter "):
+                    if section != "settings":
+                        output = output + section + "\n"
+                        count += 1
+            output = output + "Total Shows: " + str(count)
+        elif option == "filters":
+            output = "\00316List of Filters:\n"
+            for section in sorted(section):
+                if section.startswith("filter "):
+                    output = output + section + "\n"
+        print(output)
+    else:
         logging.log("help")
-    return hexchat.EAT_ALL
+        return hexchat.EAT_ALL
 
 hexchat.hook_command("AUTODL", commands)
 

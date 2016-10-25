@@ -3,17 +3,24 @@ import errno
 import re
 import os
 import subprocess
+import requests
 
 from timeit import default_timer as timer
 
 from btnautodl.lib.logging import Logging
+from btnautodl.lib.utorrent import Utorrent
 
 class AnnounceParser():
 
     def __init__(self, filters):
+        self.filters = filters
         self.config = ConfigParser.RawConfigParser()
         self.config.read(filters)
         self.logging = Logging()
+
+        self.settings = {}
+        for d in self.config.options("settings"):
+            self.settings[d] = self.config.get("settings", d).replace("\\", "/")
 
         self.options = [
             "title",
@@ -56,10 +63,51 @@ class AnnounceParser():
 
             # cross checks users filters for matches with announce
             if self.__filterMatch(announceFilters, userFilters):
-                seasonDirectory = self.data["directory"] = self.__directoryPath(announceFilters)
-                self.data["success"] = self.__download(seasonDirectory, announceFilters)
-            self.data["executeTime"] = round(((timer() - start)), 3)
+                saveToPath = self.data["directory"] = self.__directoryPath(announceFilters)
+
+                try:
+                    torrentFile = self.settings["torrent_dir"] + "/" + announceFilters["release-name"] + ".[BTN].torrent"
+                    self.__getTorrent(torrentFile, announceFilters["id"])
+                except IndexError:
+                    self.logging.error("torrent_dir")
+                    return False
+
+                if announceFilters["release-type"] == "Season":
+                    if not self.__checkSeasonFiles(announceFilters, saveToPath, torrentFile):
+                        return False
+
+                self.data["success"] = self.__download(saveToPath, torrentFile)
+            self.data["executeTime"] = str(round(((timer() - start)), 3))
         return self.data
+
+    def download(self, downloadUrl):
+        torrentFilePath = self.settings["torrent_dir"]
+        torrentFile = torrentFilePath + "/btnautodl_manual_download.torrent"
+        self.__getTorrent(torrentFile, url=downloadUrl)
+
+    def __getTorrent(self, torrentFile, torrentId):
+        url = "https://broadcasthe.net/torrents.php?action=download&" + \
+              "id=" + torrentId + "&authkey=" + self.settings['authkey'] + "&torrent_pass=" + self.settings['passkey']        
+        
+        torrentContent = requests.get(url)
+        with open(torrentFile, "wb") as torrent:
+            torrent.write(torrentContent.content)
+
+    def __download(self, saveToPath, torrentFile):
+        try:
+            subprocess.call("\"" + self.settings['utorrent_dir'] + "/utorrent.exe\"" + " /MINIMIZED /DIRECTORY \"" + saveToPath + "\" \"" + torrentFile + "\"")
+        except IndexError:
+            self.logging.error("config_no_utorrent")
+            return False
+
+        try:
+            label = self.settings["utorrent_label"]
+            utorrent = Utorrent(self.settings["webui_username"], self.settings["webui_password"], self.settings["webui_port"])
+            utorrent.use(torrentFile)
+            utorrent.setLabel(label)
+        except KeyError, IndexError:
+            pass
+        return True
 
     def __buildAnnounceFilters(self, announce):
         filters = {}
@@ -179,14 +227,15 @@ class AnnounceParser():
 
         if announceFilters['scene'] == "Yes":
             seasonFolderName = re.sub(
-                r"[^-]*$",
+                "^.+?-([^-].+)$",
                 "BTN",
                 announceFilters["release-name"]
             )
 
-        if self.config.has_option("settings", "folder_format"):
+        try:
+            folderFormat = self.settings["folder_format"]
             self.logging.warning("macro-not-set")
-        else:
+        except KeyError:
             if announceFilters["resolution"] == "SD":
                 match = r"(" + announceFilters['series'] + ".+?)(" + announceFilters["source"] + ")"
             else:
@@ -197,7 +246,7 @@ class AnnounceParser():
         seasonFullPath = seasonPath + seasonFolderName
 
         self.config.set(announceFilters["title"], saveToOption, seasonFullPath)
-        with open(filterini, "w") as configFile:
+        with open(self.filters, "w") as configFile:
             self.config.write(configFile)
 
         try:
@@ -244,31 +293,3 @@ class AnnounceParser():
                 save_dir,
                 torrentFile
             )
-
-    def __download(self, seasonDirectory, announceFilters):
-        settings = {}
-        for d in self.config.options("settings"):
-            settings[d] = self.config.get("settings", d).replace("\\", "/")
-
-        url = "https://broadcasthe.net/torrents.php?action=download&id="
-        torrentUrl = url + announceFilters["id"] + "&authkey=" + settings['authkey'] + "&torrent_pass=" + settings['passkey']
-        torrentFile = settings['torrent_dir'] + "/" + announceFilters["release-name"] + ".torrent"
-
-        torrentContent = requests.get(torrentUrl)
-        with open(torrentFile, "wb") as torrent:
-            torrent.write(torrentContent.content)
-
-        if announceFilters["release-type"] == "Season":
-            if not self.__checkSeasonFiles(announceFilters, seasonDirectory, torrentFile):
-                return False
-
-        subprocess.call("\"" + settings['utorrent_dir'] + "/utorrent.exe\"" + " /MINIMIZED /DIRECTORY \"" + seasonDirectory + "\" \"" + torrentFile + "\"",stderr=subprocess.STDOUT)
-        print(stderr)
-        try:
-            label = settings["utorrent_label"]
-            webui = Utorrent(settings["webui_username"], settings["webui_password"], settings["webui_port"])
-            webui.use(torrentFile)
-            webui.setLabel(label)
-        except KeyError:
-            pass
-        return True

@@ -3,9 +3,11 @@ import hashlib
 import time
 import re
 import requests
-from requests.auth import HTTPBasicAuth
+import json
 
+from requests.auth import HTTPBasicAuth
 from btnautodl.lib.logging import Logging
+
 
 class Utorrent():
 
@@ -13,34 +15,61 @@ class Utorrent():
         self.username = username
         self.password = password
         self.port = port
-        self.hash = None       
+        self.hash = None
+
+        self.torrentList = self.__getTorrentList()   
 
     def use(self, torrent):
-        self.hash = self.__getTorrentHash(torrent)
+        self.torrent = torrent
+        self.metainfo = self.__torrentMetainfo(torrent)
+        self.hash = hashlib.sha1(bencode.bencode(self.metainfo["info"])).hexdigest()
 
     def get(self):
-        headers = {"content-type": "application/json"}
-        params = "&list=1&getmsg=1&cid=0&t=" + re.sub("\.", "", str(round(time.time(), 4)))
-        torrentList = self.__request(params=params, headers=headers)
-        if torrentList:
-            torrentList = json.loads(torrentList.text)['torrents']
-            torrents = {}
-            for t in torrentList:
-                if t[1] == 201 and t[4] < 1000:
-                    torrents = self.__buildTorrentInfo(t)
-        return
+        self.__request(params=params)
+
+    def getName():
+        info = re.match("^(.+)\.([^\.].+)$",info["info"]["name"]).group(1) + ".torrent"
 
     def setLabel(self, label):
-        headers = {"content-type": "application/json"}
         params = "&action=setprops&s=label&hash=" + self.hash + "&v=" + label + "&t=" + re.sub("\.", "", str(round(time.time(), 4)))
-        self.__request(params=params, headers=headers)
+        self.__request(params=params)
 
-    def __getTorrentHash(self, torrent):
-        torrentFile = open(torrent, "rb")
-        metainfo = bencode.bdecode(torrentFile.read())
-        return hashlib.sha1(bencode.bencode(metainfo["info"])).hexdigest()
+    def getFiles(self):
+        files = []
+        for f in self.metainfo["info"]["files"]:
+            files.append(f['path'][0])
 
-    def __getToken(self):
+        for t in self.torrentList:
+            if t[2] in files:
+                if t[1] == 201 and t[4] < 1000:
+                    # start monitoring
+                    print("Torrent not finished")
+        return files
+
+    def __torrentMetainfo(self, torrentFile):
+        torrentFile = open(torrentFile, "rb")
+        return bencode.bdecode(torrentFile.read())
+
+    def __getTorrentList(self):
+        params = "&list=1&getmsg=1&cid=0&t=" + re.sub("\.", "", str(round(time.time(), 4)))
+        torrentList = self.__request(params=params)
+        return json.loads(torrentList.text)['torrents']
+
+    def __request(self, params=""):
+        url = "http://127.0.0.1:" + self.port + "/gui/"
+        token = self.__getWebUIToken()
+        if token:
+            a = requests.get(
+                url + "?token=" + token + params,
+                headers={"content-type": "application/json"},
+                auth=HTTPBasicAuth(self.username, self.password)
+            )
+            if a.status_code == 200:
+                return a
+            else:
+                print("Request to WebUI failed, please check your settings.")
+
+    def __getWebUIToken(self):
         data = {"t": re.sub("\.", "", str(round(time.time(), 4)))}
         a = requests.get(
             'http://127.0.0.1:' + self.port + '/gui/token.html',
@@ -53,21 +82,7 @@ class Utorrent():
         else:
             print("Unable to connect to WebUI, please check your settings.")
 
-    def __request(self, params="", headers={}):
-        url = "http://127.0.0.1:" + self.port + "/gui/"
-        token = self.__getToken()
-        if token:
-            a = requests.get(
-                url + "?token=" + token + params,
-                headers=headers,
-                auth=HTTPBasicAuth(self.username, self.password)
-            )
-            if a.status_code == 200:
-                return a
-            else:
-                print("Request to WebUI failed, please check your settings.")
-
-    def __buildTorrentInfo(self, data):
+    def __buildTorrentInfo(self, torrentInfo):
         return {
             "hash": data[0],
             "status": data[1],
@@ -88,4 +103,4 @@ class Utorrent():
             "unknown": data[16],
             "id": data[17],
             "remaining": data[18]
-        } 
+        }
