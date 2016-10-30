@@ -12,9 +12,9 @@
   If you already have HexChat installed rerun the the installer to install python capabilities, none of your current setting will be changed.
   
   After HexChat has installed bring up Command Prompt (Run as Administrator) and enter the following:
-  ```pip install bencode ConfigParser errno timeit hashlib
-    OR 
-    C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
-```
+  pip install bencode ConfigParser errno timeit hashlib
+  OR 
+  C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
+    
   ![alt text](http://i66.tinypic.com/331dqir_th.png "Windows Key") ![alt text](http://i65.tinypic.com/eg8m0n_th.png "Plus") ![alt text](http://icons.iconarchive.com/icons/chromatix/keyboard-keys/32/letter-uppercase-R-icon.png "R Key")
 
