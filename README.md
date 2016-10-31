@@ -46,8 +46,7 @@ Options: `Yes, No`
 #### *webui_username*
 #### *webui_password*
 ## Filters
-### Global Filters
-Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [local filters](#local%20filters) using `filter=`.
+Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [Local Filters](#local-filters) using `filter=`. Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
 
 #### EXAMPLE:
 ```
@@ -58,8 +57,12 @@ codec = H.264
 source = HDTV
 resolution = 720p
 scene = Yes
-```
 
+[The Walking Dead]
+filter = 720p HDTV Scene
+save-to = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
+```
+### Global Filters
 
 #### *release-type*
 Matches release type.  
