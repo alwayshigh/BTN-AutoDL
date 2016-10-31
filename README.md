@@ -31,10 +31,10 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
   
 ## Configuration
 #### *download-log*
-Option: `Yes, No`  
+Options: `Yes, No`  
 
 #### *new-season-folder*
-Option: `Yes, No`  
+Options: `Yes, No`  
 
 #### *authkey*
 #### *passkey*
@@ -48,19 +48,19 @@ Option: `Yes, No`
 ### Global Filters
 
 #### *release-type*
-Description: Matches release type.  
+Matches release type.  
 Options: `Season, Episode`  
 
 #### *year*
-Description: Match year of show release.  
+Match year of show release.  
 Example: `year = 2015,2016`  
 
 #### *season*
-Description: Match exact season number.  
+Match exact season number.  
 Example: `season = 6`  
 
 #### *episode*
-Description: Match exact season number.  
+Match exact season number.  
 Example: `episode = 13` 
 
 #### *container*
@@ -76,34 +76,34 @@ Options:  `HDTV, PDTV, DSR, DVDRip, TVRip, VHSRip, Bluray, BDRip, BRRip, DVD5, D
 Options: `SD, 720p, 1080p, 1080i, Portable Device`
 
 #### *scene*
-Description: Match a scene Release.  
+Match a scene Release.  
 Options: `Yes, No`  
 
 #### *fast-torrent*
-Description: Match release marked a fast torrent (24mbit or faster)  
+Match release marked a fast torrent (24mbit or faster)  
 Options: `Yes, No`  
 
 #### *uploader*
-Description: Match releases for certain BTN uploader.  
+Match releases for certain BTN uploader.  
 Example: `uploader = AlwaysHigh`    
 
 #### *except-tags*
-Description: Filter out certain keywords in release name.  
-example: `except-tags = proper, internal`  
+Filter out certain keywords in release name.  
+Example: `except-tags = proper, internal`  
 
 #### *release-group*
-Description: Match releases from certain encode groups.  
+Match releases from certain encode groups.  
 Example: `release-group = NTb`
 
 ### Local Filters
 
 #### *filter*
-  Description: Title of global filter to inherit filter from.  
-  Example: `filter = 720p WEB-DL, 1080p WEB-DL`
+Title of global filter to inherit filter from.  
+Example: `filter = 720p WEB-DL, 1080p WEB-DL`
 
 #### *save-to*
-Description: Directory where your series files will be saved. You can have a save-to for each filter used.
-Examples:
+Directory where your series files will be saved. You can have a save-to for each filter used.
+Example:
 ```
 Existing Folder:
 save-to = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
@@ -118,7 +118,7 @@ save-to(720p Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HD
 **note:** If you dont have an existing folder for this series releases end path with a trailing slash as this will prompt the script to create a new directory based on the release name or, (Coming Soon, Custom folder format using macros)
 
 #### *enabled*
-Description: Enabled filter to download matches.  
-Option: `Yes, No`
+Enabled filter to download matches.  
+Options: `Yes, No`
 
 
