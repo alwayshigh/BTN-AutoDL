@@ -30,103 +30,78 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
   - Copy `btnautodl.py` and `btnautodl` to the directory above. 
   
 ## Configuration
-#### download-log
+#### *download-log*
 Option: `Yes, No`  
-#### new-season-folder
+
+#### *new-season-folder*
 Option: `Yes, No`  
-#### authkey
-#### passkey
-#### torrent_dir
-#### utorrent_dir
-#### utorrent_label
-#### webui_port
-#### webui_username
-#### webui_password
+
+#### *authkey*
+#### *passkey*
+#### *torrent_dir*
+#### *utorrent_dir*
+#### *utorrent_label*
+#### *webui_port*
+#### *webui_username*
+#### *webui_password*
 ## Filters
 ### Global Filters
 
-release-type
-
+#### *release-type*
 Description: Matches release type.  
 Options: `Season, Episode`  
 
-
-year
+#### *year*
 Description: Match year of show release.  
 Example: `year = 2015,2016`  
 
-
-season
-
+#### *season*
 Description: Match exact season number.  
 Example: `season = 6`  
 
-
-episode
-
+#### *episode*
 Description: Match exact season number.  
 Example: `episode = 13` 
 
-
-container
-
+#### *container*
 Options: `AVI, MKV, VOB, MPEG, MP4, ISO, WMV, TS, M4V, M2TS`  
 
-
-codec
-
+#### *codec*
 Options: `XViD, x264, MPEG2, DiVX, DVDR, VC-1, h.264, WMV, BD, x264-Hi10P`  
 
-
-source
-
+#### *source*
 Options:  `HDTV, PDTV, DSR, DVDRip, TVRip, VHSRip, Bluray, BDRip, BRRip, DVD5, DVD9, HDDVD, WEB-DL, WEBRip BD5, BD9, BD25, BD50, Mixed, Unknown`
 
-
-resolution
-
+#### *resolution*
 Options: `SD, 720p, 1080p, 1080i, Portable Device`
 
-
-scene
-
+#### *scene*
 Description: Match a scene Release.  
 Options: `Yes, No`  
 
-
-fast-torrent
+#### *fast-torrent*
 Description: Match release marked a fast torrent (24mbit or faster)  
 Options: `Yes, No`  
 
-
-uploader
-
+#### *uploader*
 Description: Match releases for certain BTN uploader.  
 Example: `uploader = AlwaysHigh`    
 
-
-except-tags
-
+#### *except-tags*
 Description: Filter out certain keywords in release name.  
 example: `except-tags = proper, internal`  
 
-
-release-group
-
+#### *release-group*
 Description: Match releases from certain encode groups.  
 Example: `release-group = NTb`
 
-
 ### Local Filters
 
-filter
+#### *filter*
+  Description: Title of global filter to inherit filter from.  
+  Example: `filter = 720p WEB-DL, 1080p WEB-DL`
 
-Description: Title of global filter to inherit filter from.  
-Example: `filter = 720p WEB-DL, 1080p WEB-DL`
-
-
-save-to
-
+#### *save-to*
 Description: Directory where your series files will be saved. You can have a save-to for each filter used.
 Examples:
 ```
@@ -141,7 +116,6 @@ save-to(720p WEB-DL) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.W
 save-to(720p Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
 ```
 **note:** If you dont have an existing folder for this series releases end path with a trailing slash as this will prompt the script to create a new directory based on the release name or, (Coming Soon, Custom folder format using macros)
-
 
 #### *enabled*
 Description: Enabled filter to download matches.  
