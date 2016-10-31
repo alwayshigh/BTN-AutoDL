@@ -9,12 +9,12 @@
   Windows 7/8/10: ( [x86](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x86.exe) / [x64](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x64.exe) )
   
 2. **Install HexChat**  
-  Installing HexChat please check the options below. If you already have HexChat installed rerun the the installer to install python capabilities, none of your current setting will be changed.
+  When Installing HexChat please select the options below. If you already have HexChat installed rerun the the installer to install python capabilities. None of your current settings will be changed.
   
   ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")
   
 3. **Install Python Modules**  
-  Run Command Promptas Administrator and enter the following:  
+  Run Command Prompt as administrator and enter the following:  
   ```
 pip install bencode ConfigParser errno timeit hashlib
   ```  
