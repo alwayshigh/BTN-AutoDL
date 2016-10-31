@@ -31,14 +31,33 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
   
 ## Configuration
 #### download-log  
-  #### new-season-folder  
-  #### authkey  
-  #### passkey  
-  #### torrent_dir  
-  #### utorrent_dir  
-  #### utorrent_label  
-  #### webui_port  
-  #### webui_username
-  #### webui_password
+#### new-season-folder  
+#### authkey  
+#### passkey  
+#### torrent_dir  
+#### utorrent_dir  
+#### utorrent_label  
+#### webui_port  
+#### webui_username
+#### webui_password
 ## Filters
+### Global Filters  
+#### release-type  
+#### year 
+#### season  
+#### episode  
+#### container  
+#### codec  
+#### source  
+#### resolution  
+#### scene  
+#### fast-torrent
+#### uploader  
+#### except-tags  
+#### release-group
+
+### Local Filters  
+#### filter  
+#### save-to  
+#### enabled  
 
