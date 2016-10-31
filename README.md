@@ -5,15 +5,15 @@
 
 ## Installation
   
-  - Download HexChat v2.12.3: [x86](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x86.exe) - [x64](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x64.exe)
+  **1.** Download HexChat v2.12.3: [x86](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x86.exe) - [x64](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x64.exe)
   
-  - Install HexChat
+  **2.** Install HexChat
   
   Installing HexChat please check the options below. If you already have HexChat installed rerun the the installer to install python capabilities, none of your current setting will be changed.
   
   ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")
   
-  - Install Python Modules
+  **3.** Install Python Modules
   
   Run Command Promptas Administrator and enter the following:
   ```
