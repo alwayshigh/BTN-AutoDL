@@ -78,16 +78,28 @@ Description: Filter out certain keywords in release name.
 example: `except-tags = proper, internal`  
 #### release-group
 Description: Match releases from certain encode groups.  
-Exampe: `release-group = NTb`
+Example: `release-group = NTb`
 
 ### Local Filters
 #### filter
 Description: Title of global filter to inherit filter from.  
-Option: `string`  
+Example: `filter = 720p WEB-DL, 1080p WEB-DL`  
 #### save-to
-Description: Directory where your series files will be saved.
-Option: `string`  
+Description: Directory where your series files will be saved. You can have a save-to for each filter used.
+Examples:
+```
+Existing Folder:
+save-to = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
+
+New Folder:
+save-to = C:\Tv Series\The Walking Dead\
+
+Multiple Folders:
+save-to(720p WEB-DL) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.WEB-DL.H.264-Cyphanix
+save-to(720p Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
+```
+**note:** If you dont have an existing folder for this series releases end path with a trailing slash as this will prompt the script to create a new directory based on the release name or, (Coming Soon, Custom folder format using macros)
 #### enabled
-Description: Enabled filter to download matches
+Description: Enabled filter to download matches.  
 Option: `Yes, No`
 
