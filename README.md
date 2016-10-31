@@ -47,7 +47,7 @@ Options: `Yes, No`
 #### *webui_password*
 ## Filters
 ### Global Filters
-Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [local filters](#local filters) using `filter=`.
+Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [local filters](#local%20filters) using `filter=`.
 
 #### EXAMPLE:
 ```
