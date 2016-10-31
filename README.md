@@ -1,8 +1,8 @@
 # BTN-AutoDL
 
-- [Installation](#Installation)
-- [Configuartion](#Configuration)
-- [Filters](#Filters)
+- [Installation](#installation)
+- [Configuartion](#configuration)
+- [Filters](#filters)
 
 ## Installation
 1. **Download HexChat v2.12.3**  
