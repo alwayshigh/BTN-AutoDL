@@ -45,13 +45,17 @@ Option: `Yes, No`
 ## Filters
 ### Global Filters
 #### release-type
+Description: Matches release type.  
 Options: `Season, Episode`  
 #### year
-Match year of show release  
+Description: Match year of show release.  
 Example: `year = 2015,2016`  
 #### season
-Option: `6`  
+Description: Match exact season number.  
+Example: `season = 6`  
 #### episode
+Description: Match exact season number.  
+Example: `episode = 13` 
 #### container
 Options: `AVI, MKV, VOB, MPEG, MP4, ISO, WMV, TS, M4V, M2TS`  
 #### codec
@@ -61,26 +65,29 @@ Options:  `HDTV, PDTV, DSR, DVDRip, TVRip, VHSRip, Bluray, BDRip, BRRip, DVD5, D
 #### resolution
 Options: `SD, 720p, 1080p, 1080i, Portable Device`
 #### scene
-Match a scene Release  
+Description: Match a scene Release.  
 Options: `Yes, No`  
 #### fast-torrent
-Match release marked a fast torrent (24mbit or faster)  
+Description: Match release marked a fast torrent (24mbit or faster)  
 Options: `Yes, No`  
 #### uploader
-Match releases for certain BTN uploader 
+Description: Match releases for certain BTN uploader.  
 Example: `uploader = AlwaysHigh`    
 #### except-tags
-Filter out certain keywords in release name  
+Description: Filter out certain keywords in release name.  
 example: `except-tags = proper, internal`  
 #### release-group
-Match releases from certain encode groups  
+Description: Match releases from certain encode groups.  
 Exampe: `release-group = NTb`
 
 ### Local Filters
 #### filter
+Description: Title of global filter to inherit filter from.  
 Option: `string`  
 #### save-to
+Description: Directory where your series files will be saved.
 Option: `string`  
 #### enabled
+Description: Enabled filter to download matches
 Option: `Yes, No`
 
