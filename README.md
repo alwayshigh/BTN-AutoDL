@@ -49,17 +49,17 @@ Options: Season,Episode
 
 #### episode  
 #### container  
-Options: AVI, MKV, VOB, MPEG, MP4, ISO, WMV, TS, M4V, M2TS  
+Options: `AVI, MKV, VOB, MPEG, MP4, ISO, WMV, TS, M4V, M2TS`  
 #### codec  
-Options: XViD, x264, MPEG2, DiVX, DVDR, VC-1, h.264, WMV, BD, x264-Hi10P  
+Options: `XViD, x264, MPEG2, DiVX, DVDR, VC-1, h.264, WMV, BD, x264-Hi10P`  
 #### source  
-Options:  HDTV, PDTV, DSR, DVDRip, TVRip, VHSRip, Bluray, BDRip, BRRip, DVD5, DVD9, HDDVD, WEB-DL, WEBRip BD5, BD9, BD25, BD50, Mixed, Unknown  
+Options:  `HDTV, PDTV, DSR, DVDRip, TVRip, VHSRip, Bluray, BDRip, BRRip, DVD5, DVD9, HDDVD, WEB-DL, WEBRip BD5, BD9, BD25, BD50, Mixed, Unknown`  
 #### resolution  
-Options: SD, 720p, 1080p, 1080i, Portable Device
+Options: `SD, 720p, 1080p, 1080i, Portable Device`
 #### scene  
-Options: Yes, No  
+Options: `Yes, No`  
 #### fast-torrent
-Options: Yes, No  
+Options: `Yes, No`  
 #### uploader  
 #### except-tags  
 #### release-group
