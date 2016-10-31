@@ -30,6 +30,15 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
   - Copy `btnautodl.py` and `btnautodl` to the directory above. 
   
 ## Configuration
-
+#### download-log  
+  #### new-season-folder  
+  #### authkey  
+  #### passkey  
+  #### torrent_dir  
+  #### utorrent_dir  
+  #### utorrent_label  
+  #### webui_port  
+  #### webui_username
+  #### webui_password
 ## Filters
 
