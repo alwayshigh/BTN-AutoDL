@@ -3,7 +3,7 @@
 - [Installation](#installation)
 - [Configuartion](#configuration)
 - [Filters](#filters)
-- [FAQ](#faq)
+- [FAQ](#frequently-asked-questions)
 
 ## Installation
 1. **Download HexChat v2.12.3**  
@@ -48,7 +48,7 @@ Options: `Yes, No`
 ## Filters
 Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [Local Filters](#local-filters) using `filter=`. Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
 
-#### EXAMPLE:
+Example:
 ```
 [filter 720p HDTV Scene]
 release-type = Episode
@@ -93,33 +93,33 @@ Options:  `HDTV, PDTV, DSR, DVDRip, TVRip, VHSRip, Bluray, BDRip, BRRip, DVD5, D
 Options: `SD, 720p, 1080p, 1080i, Portable Device`
 
 #### *scene*
-Match a scene Release.  
+Matches scene Release.  
 Options: `Yes, No`  
 
 #### *fast-torrent*
-Match release marked a fast torrent (24mbit or faster)  
+Matches release marked a fast torrent (24mbit or faster)  
 Options: `Yes, No`  
 
 #### *uploader*
-Match releases for certain BTN uploader.  
+Matches releases for certain BTN uploader.  
 Example: `uploader = AlwaysHigh`    
 
 #### *except-tags*
-Filter out certain keywords in release name.  
+Wont download releases with certain keywords in release name.  
 Example: `except-tags = proper, internal`  
 
 #### *release-group*
-Match releases from certain encode groups.  
+Matches release from certain encode groups.  
 Example: `release-group = NTb`
 
 ### Local Filters
 
 #### *filter*
-Title of global filter to inherit filter from.  
+Name of global filter to inherit filters from.  
 Example: `filter = 720p WEB-DL, 1080p WEB-DL`
 
 #### *save-to*
-Directory where your series files will be saved. You can have a save-to for each filter used.
+Directory where your release files will be saved. You can have a save-to for each filter used.
 Example:
 ```
 Existing Folder:
@@ -130,12 +130,12 @@ save-to = C:\Tv Series\The Walking Dead\
 
 Multiple Folders:
 save-to(720p WEB-DL) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.WEB-DL.H.264-Cyphanix
-save-to(720p Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
+save-to(720p HDTV Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HDTV.x264-AVS
 ```
 **note:** If you dont have an existing folder for this series releases end path with a trailing slash as this will prompt the script to create a new directory based on the release name or, (Coming Soon, Custom folder format using macros)
 
 #### *enabled*
-Enabled filter to download matches.  
+Enable filter to download matches.  
 Options: `Yes, No`
 
 ### Frequently Asked Questions
