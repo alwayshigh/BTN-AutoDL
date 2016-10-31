@@ -3,6 +3,7 @@
 - [Installation](#installation)
 - [Configuartion](#configuration)
 - [Filters](#filters)
+- [FAQ](#faq)
 
 ## Installation
 1. **Download HexChat v2.12.3**  
@@ -46,6 +47,19 @@ Options: `Yes, No`
 #### *webui_password*
 ## Filters
 ### Global Filters
+Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [local filters](#local filters) using `filter=`.
+
+#### EXAMPLE:
+```
+[filter 720p HDTV Scene]
+release-type = Episode
+container = MKV
+codec = H.264
+source = HDTV
+resolution = 720p
+scene = Yes
+```
+
 
 #### *release-type*
 Matches release type.  
@@ -120,5 +134,7 @@ save-to(720p Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.720p.HD
 #### *enabled*
 Enabled filter to download matches.  
 Options: `Yes, No`
+
+### Frequently Asked Questions
 
 
