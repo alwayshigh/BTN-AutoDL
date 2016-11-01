@@ -39,27 +39,27 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
   
 ## Configuration
 #### *download-log*
+Enable logging of new matched downloads in a HexChat log tab.  
 Options: `Yes, No`  
-
-#### *new-season-folder*
-Options: `Yes, No`  
-
 #### *authkey*
+Personal BTN authkey  
+[How to get passkey?](#frequently-asked-questions)
 #### *passkey*
-Personal BTN passkey
-[How to get passkey?](#
+Personal BTN passkey  
+[How to get passkey?](#frequently-asked-questions)
 #### *torrent_dir*
-Directory to save all .torrent files.
+Directory to save all .torrent files  
 #### *utorrent_dir*
-Directory path to the utorrent.exe
+Directory path to the utorrent.exe  
 #### *utorrent_label*
-Set a uTorrent label for all downloads.
+Set a uTorrent label for all downloads.  
 #### *webui_port*
-Port set when instaling utorent Web UI.
+Port set when instaling utorent Web UI.  
 #### *webui_username*
-Username set when instaling utorent Web UI.
+Username set when instaling utorent Web UI.  
 #### *webui_password*
-Password set when instaling utorent Web UI.
+Password set when instaling utorent Web UI.  
+
 ## Filters
 Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
 
