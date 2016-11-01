@@ -11,7 +11,7 @@
 1. **HexChat v2.12.3**  
 
   ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")  
-  **Important:** You will need to rerun hexchat installer to enabled python 2.7 plugin support. If you already have HexChat, reinstalling wont edit your current HexChat settings.  
+  **Important:** You will need to rerun hexchat installer to enabled Python 2.7 plugin support. If you already have HexChat, reinstalling wont edit your current HexChat settings.  
   
 2. **Python Modules**  
   Run Command Prompt as administrator and enter the following:  
@@ -46,12 +46,20 @@ Options: `Yes, No`
 
 #### *authkey*
 #### *passkey*
+Personal BTN passkey
+[How to get passkey?](#
 #### *torrent_dir*
+Directory to save all .torrent files.
 #### *utorrent_dir*
+Directory path to the utorrent.exe
 #### *utorrent_label*
+Set a uTorrent label for all downloads.
 #### *webui_port*
+Port set when instaling utorent Web UI.
 #### *webui_username*
+Username set when instaling utorent Web UI.
 #### *webui_password*
+Password set when instaling utorent Web UI.
 ## Filters
 Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
 
@@ -147,9 +155,6 @@ Options: `Yes, No`
 
 ### Frequently Asked Questions
 
-1. **Where can i find my authkey and passkey?**  
+1. **Where can i find my authkey or passkey?**  
 Go to BTN website and right-click a torrent download button and click `copy link address` paste the contents to display your authkey and passkey like the url below copy the relevant info into your config:  
 `https://broadcasthe.net/torrents.php?action=download&id=1337&authkey=a1b2c3d4e5f6g7h8i9j1k2l3m&torrent_pass=a1b2c3d4e5f6g7h8i9j1k2l3m`
-
-2. **Where can i find my uTorrent webui info?**  
-
