@@ -3,6 +3,8 @@
 - [Installation](#installation)
 - [Configuartion](#configuration)
 - [Filters](#filters)
+  * [Global Filters](#global-filters)
+  * [Local Filters](#local-filters)
 - [FAQ](#frequently-asked-questions)
 
 ## Installation
@@ -46,7 +48,7 @@ Options: `Yes, No`
 #### *webui_username*
 #### *webui_password*
 ## Filters
-Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the [Local Filters](#local-filters) using `filter=`. Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
+Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
 
 Example:
 ```
