@@ -142,4 +142,9 @@ Options: `Yes, No`
 
 ### Frequently Asked Questions
 
+1. **Where can i find my authkey and passkey?**  
+Go to BTN website and right-click a torrent download button and click `copy link address` paste the contents to display your authkey and passkey like the url below copy the relevant info into your config:  
+`https://broadcasthe.net/torrents.php?action=download&id=1337&authkey=a1b2c3d4e5f6g7h8i9j1k2l3m&torrent_pass=a1b2c3d4e5f6g7h8i9j1k2l3m`
 
+2. **Where can i find my uTorrent webui info?**  
+Follow this small tutorial to set your uTorrent Web UI - [Web UI Tutorial](http://www.htpcguides.com/setup-utorrent-remote-access-webui/)
