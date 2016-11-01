@@ -10,7 +10,7 @@
 ## Installation
 1. **HexChat v2.12.3**  
   When Installing HexChat please select the options below. If you already have HexChat installed rerun the the installer to install python capabilities. None of your current settings will be changed.  
-  ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")
+  ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")  
   
 2. **Python Modules**  
   Run Command Prompt as administrator and enter the following:  
@@ -20,11 +20,13 @@ pip install bencode ConfigParser errno timeit hashlib
   If you fail to find pip use the below code instead.  
   ```
 C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
-  ```
-  
+  ```  
+
 3. **uTorrent Web UI**  
-  Some functions of this script require access to uTorrents optional Web UI.   
+  Some functions of this script require access to uTorrents optional Web UI.  
+  
   To install follow this small tutorial - [Web UI Tutorial](http://www.htpcguides.com/setup-utorrent-remote-access-webui/)  
+  
   Remember the username/password/port you used as they will be needed for BTN AutoDL configuration. For the purposes of this script I recommend limiting Web UI access to localhost IP: `127.0.0.1`  
   
   **Note:** You can use an alternative Web UI port or uTorrents listening port set in `Options->Prefrences->Connection`
