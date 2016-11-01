@@ -7,6 +7,9 @@
   * [Local Filters](#local-filters)
 - [FAQ](#frequently-asked-questions)
 
+## Overview
+BTN AutoDL was built automate the downloading of shows in an organised manner. It allows you to specify filters to match your required release and store your downloads in tidy directory format you choose depending on ur settings. No more moving files around. It was **not** created in order to peform wildcard matches like irssi-autodl for you upload whores ie.`match-releases = *`
+
 ## Installation
 1. **HexChat v2.12.3**  
 
