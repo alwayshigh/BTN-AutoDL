@@ -9,8 +9,9 @@
 
 ## Installation
 1. **HexChat v2.12.3**  
-  When Installing HexChat please select the options below. If you already have HexChat installed rerun the the installer to install python capabilities. None of your current settings will be changed.  
+
   ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")  
+  **Important:** You will need to rerun hexchat installer to enabled python 2.7 plugin support. If you already have HexChat, reinstalling wont edit your current HexChat settings.  
   
 2. **Python Modules**  
   Run Command Prompt as administrator and enter the following:  
