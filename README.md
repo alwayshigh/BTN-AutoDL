@@ -8,13 +8,11 @@
 - [FAQ](#frequently-asked-questions)
 
 ## Installation
-1. **Download HexChat v2.12.3**  
-  Windows 7/8/10: ( [x86](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x86.exe) / [x64](https://dl.hexchat.net/hexchat/HexChat%202.12.3%20x64.exe) )
-2. **Install HexChat**  
-  When Installing HexChat please select the options below. If you already have HexChat installed rerun the the installer to install python capabilities. None of your current settings will be changed.
-  
+1. **HexChat v2.12.3**  
+  When Installing HexChat please select the options below. If you already have HexChat installed rerun the the installer to install python capabilities. None of your current settings will be changed.  
   ![alt text](http://oi63.tinypic.com/2rna7bo.jpg "Hexchat Python install")
-3. **Install Python Modules**  
+  
+2. **Python Modules**  
   Run Command Prompt as administrator and enter the following:  
   ```
 pip install bencode ConfigParser errno timeit hashlib
@@ -22,17 +20,19 @@ pip install bencode ConfigParser errno timeit hashlib
   If you fail to find pip use the below code instead.  
   ```
 C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
-  ```  
-4. **uTorrent**
+  ```
+  
+3. **uTorrent Web UI**  
   Some functions of this script require access to uTorrents optional Web UI.   
   To install follow this small tutorial - [Web UI Tutorial](http://www.htpcguides.com/setup-utorrent-remote-access-webui/)  
   Remember the username/password/port you used as they will be needed for BTN AutoDL configuration. For the purposes of this script I recommend limiting Web UI access to localhost IP: `127.0.0.1`  
   
   **Note:** You can use an alternative Web UI port or uTorrents listening port set in `Options->Prefrences->Connection`
-5. **BTN AutoDL**
-  - Download BTN AutoDL.
-  - ![alt text](http://i66.tinypic.com/331dqir_th.png "Windows Key") ![alt text](http://i65.tinypic.com/eg8m0n_th.png "Plus") ![alt text](http://icons.iconarchive.com/icons/chromatix/keyboard-keys/32/letter-uppercase-R-icon.png "R Key") enter `%appdata%/hexchat/addons`
-  - Copy `btnautodl.py` and `btnautodl` to the directory above. 
+  
+4. **BTN AutoDL**  
+  Download BTN AutoDL.  
+  ![alt text](http://i66.tinypic.com/331dqir_th.png "Windows Key") ![alt text](http://i65.tinypic.com/eg8m0n_th.png "Plus") ![alt text](http://icons.iconarchive.com/icons/chromatix/keyboard-keys/32/letter-uppercase-R-icon.png "R Key") enter `%appdata%/hexchat/addons`  
+  Copy `btnautodl.py` and `btnautodl` to the directory above.  
   
 ## Configuration
 #### *download-log*
