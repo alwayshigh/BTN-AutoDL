@@ -50,17 +50,17 @@ Personal BTN authkey
 #### *passkey*
 Personal BTN passkey  
 [How to get passkey?](#frequently-asked-questions)
-#### *torrent_dir*
+#### *torrent-dir*
 Directory to save all .torrent files  
-#### *utorrent_dir*
+#### *utorrent-dir*
 Directory path to the utorrent.exe  
-#### *utorrent_label*
+#### *utorrent-label*
 Set a uTorrent label for all downloads.  
-#### *webui_port*
+#### *webui-port*
 Port set when instaling utorent Web UI.  
-#### *webui_username*
+#### *webui-username*
 Username set when instaling utorent Web UI.  
-#### *webui_password*
+#### *webui-password*
 Password set when instaling utorent Web UI.  
 
 ## Filters
