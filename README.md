@@ -45,7 +45,7 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
 Enable logging of new matched downloads in a HexChat log tab.  
 Options: `Yes, No`  
 #### *authkey*
-Personal BTN authkey. [How to find passkey?](#frequently-asked-questions)
+Personal BTN authkey. [How to find authkey?](#frequently-asked-questions)
 #### *passkey*
 Personal BTN passkey. [How to find passkey?](#frequently-asked-questions)
 #### *torrent-dir*
@@ -62,7 +62,7 @@ Web UI username for uTorrent.
 Web UI password for uTorrent.  
 
 ## Filters
-Global Filters are used to help store repetitivly used filters to reduce repeating yourself. You then can reference them in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release.
+Global filters are used to help store repetitivly used filters to reduce repeating yourself, while local filters and series specific. You can reference global filters in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release. Make sure the header of the local filter matches the series title used on broadcasthe.net.
 
 Example:
 ```
