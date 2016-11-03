@@ -62,7 +62,7 @@ Web UI username for uTorrent.
 Web UI password for uTorrent.  
 
 ## Filters
-Global filters are used to help store repetitivly used filters to reduce repeating yourself, while local filters and series specific. You can reference global filters in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release. Make sure the header of the local filter matches the series title used on broadcasthe.net.
+There are two types of Filter groups Global and Local, global filters are used to help store repetitivly used filters to reduce repeating yourself, while local filters are series specific. You can reference global filters in the Local Filters using [`filter=`](#local-filters). Below is a basic example to download The Walking Dead as 720p HDTV Scene release. Make sure the header of the local filter matches the series title used on broadcasthe.net.
 
 Example:
 ```
@@ -153,6 +153,8 @@ save-to(720p HDTV Scene) = C:\Tv Series\The Walking Dead\The.Walking.Dead.S06.72
 #### *enabled*
 Enable filter to download matches.  
 Options: `Yes, No`
+
+**Note:** You can use global filter options inside local filter.
 
 ### Frequently Asked Questions
 
