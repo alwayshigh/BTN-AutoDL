@@ -37,7 +37,7 @@ C:\Python27\Scripts\pip.exe install bencode ConfigParser errno timeit hashlib
   
 4. **BTN AutoDL**  
   Download BTN AutoDL.  
-  ![alt text](http://i66.tinypic.com/331dqir_th.png "Windows Key") ![alt text](http://i65.tinypic.com/eg8m0n_th.png "Plus") ![alt text](http://icons.iconarchive.com/icons/chromatix/keyboard-keys/32/letter-uppercase-R-icon.png "R Key") enter `%appdata%/hexchat/addons`  
+  <kbd>WINDOWS</kbd> + <kbd>R</kbd> paste `%appdata%/hexchat/addons` <kbd>ENTER</kbd> 
   Copy `btnautodl.py` and `btnautodl` to the directory above.  
   
 ## Configuration
