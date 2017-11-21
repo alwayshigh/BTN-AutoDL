@@ -22,5 +22,6 @@ messages = {
             "# Print torrent stats to current channel.\n"
             "TORRENT view <torrent_name>\n"
             "# Display this help ouput\n"
-            "HELP"
+            "HELP",
+    "torrent-dir": "No directory set in season filter, if you catching multiple global filters please set directory for each."
 }

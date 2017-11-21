@@ -17,7 +17,7 @@ class Utorrent():
         self.port = port
         self.hash = None
 
-        self.torrentList = self.__getTorrentList()   
+        #self.torrentList = self.__getTorrentList()
 
     def use(self, torrent):
         self.torrent = torrent
@@ -50,7 +50,7 @@ class Utorrent():
         torrentFile = open(torrentFile, "rb")
         return bencode.bdecode(torrentFile.read())
 
-    def __getTorrentList(self):
+    def getTorrentList(self):
         params = "&list=1&getmsg=1&cid=0&t=" + re.sub("\.", "", str(round(time.time(), 4)))
         torrentList = self.__request(params=params)
         return json.loads(torrentList.text)['torrents']

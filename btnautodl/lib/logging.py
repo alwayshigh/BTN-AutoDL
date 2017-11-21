@@ -26,14 +26,12 @@ class Logging():
         msg = "\002\00309[NEW DOWNLOAD]\017 " + self.__getLogMessage(msgId, msgData)
         self.__printToLog(msg)
 
-    def log(self, msgId=None, msgData=None):
-        if not msgId: return
-        msg = self.__getLogMessage(msgId, msgData)
-        print(msg)
+    def log(self, msg):
+        self.__printToLog(msg)
 
     def __getLogTab(self):
         logTabName = "BTN-AutoDL"
-        if not hexchat.find_context(server=logTabName, channel=logTabName):
+        if hexchat.find_context(server=logTabName, channel=logTabName) == None:
             loggingTab = hexchat.get_prefs('gui_tab_newtofront')
             hexchat.command('set -quiet gui_tab_newtofront 0')
             hexchat.command('newserver -noconnect {0}'.format(logTabName))

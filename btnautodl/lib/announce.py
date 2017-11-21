@@ -4,6 +4,7 @@ import re
 import os
 import subprocess
 import requests
+import bencode
 
 from timeit import default_timer as timer
 
@@ -40,7 +41,8 @@ class AnnounceParser():
             "release-group",
             "except-tags",
             "season",
-            "episode"
+            "episode",
+            "web-source"
         ]
 
     def parse(self, announce):
@@ -58,30 +60,29 @@ class AnnounceParser():
             if self.config.has_option(announceFilters["title"], "enabled"):
                 if self.config.get(announceFilters["title"], 'enabled').lower() == "no":
                     self.data["success"] = False
-
+                    return self.data
             userFilters = self.__buildUserFilters(announceFilters)
-
             # cross checks users filters for matches with announce
             if self.__filterMatch(announceFilters, userFilters):
                 saveToPath = self.data["directory"] = self.__directoryPath(announceFilters)
-
                 try:
-                    torrentFile = self.settings["torrent_dir"] + "/" + announceFilters["release-name"] + ".[BTN].torrent"
+                    torrentFile = self.settings["torrent-dir"] + "/" + announceFilters["release-name"] + ".[BTN].torrent"
                     self.__getTorrent(torrentFile, announceFilters["id"])
-                except IndexError:
-                    self.logging.error("torrent_dir")
-                    return False
 
-                if announceFilters["release-type"] == "Season":
-                    if not self.__checkSeasonFiles(announceFilters, saveToPath, torrentFile):
-                        return False
+                    if announceFilters["release-type"] == "Season":
+                        if not self.__checkSeasonFiles(announceFilters, saveToPath, torrentFile):
+                            self.data["success"] = False
+                    else:
+                        self.data["success"] = self.__download(saveToPath, torrentFile)
+                except (IndexError, KeyError) as e:
+                    self.logging.error(msgId="torrent-dir")
+                    self.data["success"] = False
 
-                self.data["success"] = self.__download(saveToPath, torrentFile)
             self.data["executeTime"] = str(round(((timer() - start)), 3))
         return self.data
 
     def download(self, downloadUrl):
-        torrentFilePath = self.settings["torrent_dir"]
+        torrentFilePath = self.settings["torrent-dir"]
         torrentFile = torrentFilePath + "/btnautodl_manual_download.torrent"
         self.__getTorrent(torrentFile, url=downloadUrl)
 
@@ -95,14 +96,14 @@ class AnnounceParser():
 
     def __download(self, saveToPath, torrentFile):
         try:
-            subprocess.call("\"" + self.settings['utorrent_dir'] + "/utorrent.exe\"" + " /MINIMIZED /DIRECTORY \"" + saveToPath + "\" \"" + torrentFile + "\"")
+            subprocess.call("\"" + self.settings['utorrent-dir'] + "/utorrent.exe\"" + " /MINIMIZED /DIRECTORY \"" + saveToPath + "\" \"" + torrentFile + "\"")
         except IndexError:
             self.logging.error("config_no_utorrent")
             return False
 
         try:
-            label = self.settings["utorrent_label"]
-            utorrent = Utorrent(self.settings["webui_username"], self.settings["webui_password"], self.settings["webui_port"])
+            label = self.settings["utorrent-label"]
+            utorrent = Utorrent(self.settings["webui-username"], self.settings["webui-password"], self.settings["webui-port"])
             utorrent.use(torrentFile)
             utorrent.setLabel(label)
         except KeyError, IndexError:
@@ -156,7 +157,7 @@ class AnnounceParser():
     def __getFilterOptions(self, filterName, userFilters, isLocal=False, aliasName=None):
         if isLocal:
             if len(userFilters) > 0:
-                for i, f in enumerate(userFilters):
+                for f in userFilters:
                     userFilters = self.__getFilterOptions(filterName, userFilters, False, f)
             else:
                 userFilters = self.__getFilterOptions(filterName, userFilters, False)
@@ -181,26 +182,51 @@ class AnnounceParser():
         return userFilters
 
     def __filterMatch(self, announceFilters, userFilters):
+        
         for filterName, filterOptions in userFilters.items():
-            passed = True
+            filterPassed = True
             for optionName, optionList in filterOptions.items():
+                optionPassed = True
                 if optionName == "language":
                     if int(announceFilters["language"]):
-                        passed = False
+                        optionPassed = False
                         languageOptions = configparser.ConfigParser()
                         langini = hexchatDir + "/addons/resources/languages.ini"
                         languageOptions.read(langini)
                         for language in optionList:
                             if languageOptions.has_option("language", language):
-                                passed = True
+                                optionPassed = True
                                 break
                 elif optionName == "except-tags":
                     for tag in optionList:
                         if re.search('(?<!^)' + tag + '(?!$)', announceFilters['release-name'], re.IGNORECASE):
-                            passed = False
+                            optionPassed = False
+                elif optionName == "web-source":
+                    if announceFilters["source"] in ["WEB-DL", "WEBRip"]:
+                        webSourceAliases = {
+                            "itunes": ["itunes", "it"],
+                            "amazon": ["amazon", "amzn"],
+                            "netflix": ["netflix", "nf"],
+                            "tvland": ["tvland", "tvl"],
+                            "hulu": ["hulu"],
+                            "epix": ["epix"]
+                        }
+                        for webSource in optionList:
+                            optionPassed = False
+                            if webSource in webSourceAliases:
+                                aliases = "|".join(webSourceAliases[webSource])
+                                regex = "(?<!^){}[\.|\s]{}(?!$)".format(aliases, announceFilters["source"])
+                                result = re.findall(regex, announceFilters['release-name'], re.IGNORECASE)
+                                if result:
+                                    optionPassed = True
+                                    break
                 elif announceFilters[optionName].lower() not in optionList:
-                    passed = False
-            if passed:
+                    optionPassed = False
+
+                if not optionPassed:
+                    filterPassed = optionPassed
+                    break
+            if filterPassed:
                 self.globalFilter = filterName
                 return True
         return False
@@ -217,34 +243,52 @@ class AnnounceParser():
                 self.logging.warning("save-to-not-set", msgData=[announceFilters["title"]])
                 self.logging.info("save-to-default")
                 return None
-        if announceFilters['episode'] == "01" or saveToDirectory.endswith("/"):
-            saveToDirectory = self.__createSeasonDirectory(announceFilters, saveToOption, saveToDirectory)
+        if 'episode' in announceFilters:
+            if announceFilters['episode'] == "01" or saveToDirectory.endswith("/"):
+                saveToDirectory = self.__createSeasonDirectory(announceFilters, saveToOption, saveToDirectory)
         return saveToDirectory
 
     def __createSeasonDirectory(self, announceFilters, saveToOption, seasonPath):
         if not seasonPath.endswith("/"):
             seasonPath = seasonPath.rsplit("/", 1)[0] + "/"
 
-        if announceFilters['scene'] == "Yes":
-            seasonFolderName = re.sub(
-                "^.+?-([^-].+)$",
-                "BTN",
-                announceFilters["release-name"]
-            )
-
         try:
-            folderFormat = self.settings["folder_format"]
+            folderFormat = self.settings["folder-format"]
             self.logging.warning("macro-not-set")
         except KeyError:
-            if announceFilters["resolution"] == "SD":
-                match = r"(" + announceFilters['series'] + ".+?)(" + announceFilters["source"] + ")"
+            pass
+
+        if announceFilters['scene'] == "Yes":
+            announceFilters['release-group'] = "BTN"
+
+        if announceFilters["codec"] == "H.264":
+            if re.search("(x264)", announceFilters["release-name"], re.IGNORECASE):
+                codec = "x264"
             else:
-                match = r"(^.+S" + announceFilters['season'] + ").+?(" + announceFilters["resolution"] + ".*$)"
+                codec = announceFilters["codec"]
 
-        seasonFolderName = re.match(match, announceFilters["release-name"], re.IGNORECASE).group(1, 2)
-        seasonFolderName = ".".join(seasonFolderName)
-        seasonFullPath = seasonPath + seasonFolderName
+        m = r"(^.+?)[\.|\s]{}".format(announceFilters["series"], announceFilters["source"])
+        season = re.match(m, announceFilters["release-name"], re.IGNORECASE).group(1).replace(" ", ".")
 
+        if announceFilters["resolution"] == "SD":
+            folderName = "{}.S{}.{}.{}-{}".format(
+                season,
+                announceFilters["season"],
+                announceFilters["source"],
+                codec,
+                announceFilters["release-group"]
+            )
+        else:
+            folderName = "{}.S{}.{}.{}.{}-{}".format(
+                season,
+                announceFilters["season"],
+                announceFilters["resolution"],
+                announceFilters["source"],
+                codec,
+                announceFilters["release-group"]
+            )
+            
+        seasonFullPath = seasonPath + folderName
         self.config.set(announceFilters["title"], saveToOption, seasonFullPath)
         with open(self.filters, "w") as configFile:
             self.config.write(configFile)
@@ -257,17 +301,17 @@ class AnnounceParser():
 
         return seasonFullPath
 
-    def __checkSeasonFiles(self, announceFilters):
-        torrent = "C:/Users/Jesse/Downloads/Fear.the.Walking.Dead.S02.720p.WEB-DL.DD5.1.H.264-NTb.[BTN].torrent"
-        torrentFile = open(torrent, "rb")
-        info = bencode.bdecode(torrentFile.read())
+    def __checkSeasonFiles(self, announceFilters, saveToPath, torrentFile):
+        # torrentFile = open(torrentFile, "rb")
+        # info = bencode.bdecode(torrentFile.read())
 
-        seasonFilenames = []
-        for index in range(len(info['info']['files'])):
-            seasonFilenames.extend(info['info']['files'][index]["path"])
+        # seasonFilenames = []
+        # for index in range(len(info['info']['files'])):
+        #     seasonFilenames.extend(info['info']['files'][index]["path"])
 
-        torrentList = self.getTorrentList()
-        torrentList = json.loads(torrentList.text)['torrents']
+        utorrent = Utorrent(self.settings["webui-username"], self.settings["webui-password"], self.settings["webui-port"])
+        utorrent.use(torrentFile)
+        torrentList = utorrent.torrentList()
         torrentFilenames = []
         torrentFileDetails = []
         for torrent in torrentList:
@@ -283,13 +327,53 @@ class AnnounceParser():
                 i = torrentFilenames.index(filename)
                 if int(torrentFileDetails[i]["completed"]) < 1000 and int(torrentFileDetails[i]["status"]) == 136:
                     files.append(filename)
-        if files:
-            conn = sqlite3.connect("database.db")
-            c = conn.cursor()
-            c.execute('''INSERT INTO monitor VALUES ({},{},{},{},{})''').format(
-                announcerFilters["name"],
-                files,
-                hashId,
-                save_dir,
-                torrentFile
-            )
+
+        files = ",".join(files)
+        self.logging.log(files)       
+        # if files:
+        #     conn = sqlite3.connect("database.db")
+        #     c = conn.cursor()
+        #     c.execute('''INSERT INTO monitor VALUES ({},{},{},{},{})''').format(
+        #         announcerFilters["name"],
+        #         files,
+        #         hashId,
+        #         save_dir,
+        #         torrentFile
+        #     )
+
+# filterini = "C:\\Users\\Jesse\\AppData\\Roaming\\HexChat\\addons\\btnautodl\\btnautodl\\filters.ini"
+# announceFilters = "American Dad! | Season 14 | Season | 2017 | MKV | H.264 | WEB-DL | 1080p | No | Yes | 831974 | truedread | English | American.Dad.S14.1080p.iT.WEB-DL.DD5.1.H.264-ViSUM"
+# torrentFile = "C:\\Users\\Jesse\\Downloads\\American.Dad.S14.1080p.iT.WEB-DL.DD5.1.H.264-ViSUM.[BTN].torrent"
+
+# btn = AnnounceParser(filterini)
+# btn.parse(announceFilters)
+
+# import pprint
+# import bencode
+# import hashlib
+# import os
+# from pathlib import Path
+
+
+# saveToPath = "F:\American Dad!\American.Dad.S14.1080p.WEB-DL.DD5.1.H.264-ViSUM"
+
+# torrent = "C:\Users\Jesse\Downloads\American.Dad.S14.1080p.iT.WEB-DL.DD5.1.H.264-ViSUM.[BTN].torrent"
+# torrent = open(torrent, "rb")
+# metainfo = bencode.bdecode(torrent.read())
+# torrentHash = hashlib.sha1(bencode.bencode(metainfo["info"])).hexdigest()
+
+# failed = []
+
+# for torrentInfo in metainfo["info"]["files"]:
+#     path = saveToPath + "\\" + torrentInfo["path"][0]
+#     torrentFile = Path(path)
+#     if torrentFile.exists():
+#         stats = os.stat(path)
+#         if stats.st_size != torrentInfo["length"]:
+#             failed.append(torrentInfo)
+
+# print(failed)
+
+# # for t in torrentList:
+#     # if 
+

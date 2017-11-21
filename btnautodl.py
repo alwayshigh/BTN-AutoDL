@@ -19,7 +19,6 @@ logging = Logging()
 
 filters = pluginDirectory + "\\btnautodl\\filters.ini"
 
-
 def monitor(word, word_eol, userdata):
     if hexchat.get_info('channel') == "#BTN-WhatAuto":
         announceParser = AnnounceParser(filters)
@@ -48,7 +47,7 @@ def commands(word, word_eol, userdata):
     try:
         cmd = word[1]
     except IndexError:
-        pass
+        cmd = None
 
     if cmd == "download":
         announceParser = AnnounceParser(filters)
@@ -70,8 +69,7 @@ def commands(word, word_eol, userdata):
                 data["executeTime"],
                 location)
             )
-        else:
-            logging.info("unexpected-error")
+            
         return hexchat.EAT_ALL
     elif cmd == "display":
         config = ConfigParser.RawConfigParser()
@@ -100,5 +98,4 @@ def commands(word, word_eol, userdata):
         return hexchat.EAT_ALL
 
 hexchat.hook_command("AUTODL", commands)
-
 hexchat.hook_print("Channel Message", monitor)
